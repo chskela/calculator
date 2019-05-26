@@ -3,13 +3,14 @@ const out = document.querySelector('.out');
 const plus = document.querySelector('#plus');
 const minus = document.querySelector('#minus');
 const division = document.querySelector('#division');
-const multiplication = document.querySelector('#multiplicationa');
+const multiplication = document.querySelector('#multiplication');
 
 const equal = document.querySelector('#equal');
 
 
 let value = '';
 let memory = 0;
+let flag = 0;
 
 for (let i=0; i<digitals.length; i++) {
     digitals[i].addEventListener('click', () => {
@@ -26,8 +27,45 @@ plus.addEventListener('click', () => {
   memory = +value;
   value = '';
   out.innerHTML = 0;
+  flag = 1;
+});
+
+minus.addEventListener('click', () => {
+  memory = +value;
+  value = '';
+  out.innerHTML = 0;
+  flag = 2;
+});
+multiplication.addEventListener('click', () => {
+  memory = +value;
+  value = '';
+  out.innerHTML = 0;
+  flag = 3;
+});
+division.addEventListener('click', () => {
+  memory = +value;
+  value = '';
+  out.innerHTML = 0;
+  flag = 4;
 });
 
 equal.addEventListener('click', () => {
-  out.innerHTML = memory + +value;
+  console.log(flag);
+  
+  switch (flag) {
+    case 1:
+      out.innerHTML = memory + +value;
+      break;
+    case 2:
+      out.innerHTML = memory - +value;
+      break;
+    case 3:
+      out.innerHTML = memory * +value;
+      break;
+    case 4:
+      out.innerHTML = memory / +value;
+      break;
+
+  }
+  
 })

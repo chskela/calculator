@@ -5,6 +5,8 @@
 }
 
 .wrapper {
+    display: block;
+    margin: 50px;
     width: 600px;
     margin: 0px auto;
     border: 1px solid gray;  
@@ -24,6 +26,7 @@
 }
 
 .out {
+    
     padding-right: 5px;
     display: block;
     width: 580px;
