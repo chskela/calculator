@@ -6,32 +6,37 @@
 
 .wrapper {
     display: block;
-    margin: 50px;
-    width: 600px;
-    margin: 0px auto;
+    width: 532px;
+    margin: 50px auto;
     border: 1px solid gray;  
 }
-
+.wrapper:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
 .key {
-    display: inline-block;
+    display: block;
     width: 120px;
     height: 120px;
     font-size: 50px;
     text-align: center;
-    align-content: center;
+    line-height: 120px;
     border: 1px solid gray;
-    border-radius: 5%;
+    border-radius: 5px;
     cursor: pointer;
-    margin: 5px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    float: left;
 }
 
 .out {
-    
+    border-radius: 5px;
     padding-right: 5px;
     display: block;
-    width: 580px;
+
     height: 60px;
-    margin: 10px auto;
+    margin: 10px;
     border: 1px solid gray; 
     font-size: 50px; 
     text-align: right;
