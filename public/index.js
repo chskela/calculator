@@ -17,8 +17,12 @@ let result = 0;
 
 const chekResult = result => {
   result = '' + result;
-  result = result.slice('.');
-  if (result[0].length <= 17) return result[0]+result[1].toFixed()
+  if (result.length > 17) {
+    return result.slice(0, 18);
+  } else {
+    return result;
+  } 
+  
 }
 
 for (let i=0; i<digitals.length; i++) {
@@ -31,36 +35,37 @@ for (let i=0; i<digitals.length; i++) {
   })
 }
 
-plus.addEventListener('click', () => {
+const reset = () => {
   memory = +value;
   value = '';
   out.innerHTML = 0;
+} 
+
+plus.addEventListener('click', () => {
+  reset();
   flag = 1;
 });
 
 minus.addEventListener('click', () => {
-  memory = +value;
-  value = '';
-  out.innerHTML = 0;
+  reset();
   flag = 2;
 });
 multiplication.addEventListener('click', () => {
-  memory = +value;
-  value = '';
-  out.innerHTML = 0;
+  reset();
   flag = 3;
 });
 division.addEventListener('click', () => {
-  memory = +value;
-  value = '';
-  out.innerHTML = 0;
+  reset();
   flag = 4;
 });
 root.addEventListener('click', () => {
-  out.innerHTML = value = Math.pow(+value, 2)
+  result = value = Math.pow(+value, 2);
+  out.innerHTML = chekResult(result);
+  console.log(chekResult(result).length)
 });
 square.addEventListener('click', () => {
-  out.innerHTML = value = Math.pow(+value, 0.5)
+  result = value = Math.sqrt(+value);
+  out.innerHTML = chekResult(result);
 });
 clear.addEventListener('click', () => {
   memory = 0;
@@ -86,7 +91,6 @@ equal.addEventListener('click', () => {
     
   }
   value = '';
-  out.innerHTML = result;
-  chekResult(result);
+  out.innerHTML = chekResult(result);
   
 })
