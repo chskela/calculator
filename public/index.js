@@ -8,6 +8,8 @@ const equal = document.querySelector('#equal');
 const root = document.querySelector('#root');
 const square =document.querySelector('#square');
 const clear = document.querySelector('#clear');
+const dot = document.querySelector('#dot');
+const backspace = document.querySelector('#backspace');
 
 let value = '';
 let memory = 0;
@@ -35,8 +37,20 @@ for (let i=0; i<digitals.length; i++) {
 const reset = () => {
   memory = +value;
   value = '';
-  out.innerHTML = 0;
-} 
+  out.innerHTML = '';
+}
+
+backspace.addEventListener('click', () => {
+  out.innerHTML = value = out.textContent.slice(1, out.textContent.length)
+})
+
+dot.addEventListener('click', () => {
+  console.log(dot.textContent)
+  if(out.textContent.length < 18 && !~out.textContent.indexOf('.')) {
+      value += dot.textContent;
+      out.innerHTML = value;
+  } 
+})
 
 plus.addEventListener('click', () => {
   reset();
@@ -59,21 +73,24 @@ division.addEventListener('click', () => {
 });
 
 root.addEventListener('click', () => {
-  result = value = Math.pow(+value, 2);
-  out.innerHTML = chekResult(result);
-  console.log(chekResult(result).length)
+  if(value !== '') {
+    result = value = Math.pow(+value, 2);
+    out.innerHTML = chekResult(result);
+  } 
 });
 
 square.addEventListener('click', () => {
-  result = value = Math.sqrt(+value);
-  out.innerHTML = chekResult(result);
+  if(value !== '') {
+    result = value = Math.sqrt(+value);
+    out.innerHTML = chekResult(result);
+  } 
 });
 
 clear.addEventListener('click', () => {
   memory = 0;
   value = '';
   result = 0;
-  out.innerHTML = 0;
+  out.innerHTML = '';
 })
 
 equal.addEventListener('click', () => {
