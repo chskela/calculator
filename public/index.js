@@ -19,7 +19,8 @@ let result = 0;
 const chekResult = result => {
   result = '' + result;
   if (result.length > 17) {
-    return result.slice(0, 18);
+    result = result.split('e');
+    return result[0].slice(0, 17 - result[1].length) + 'e' + result[1];
   } else {
     return result;
   } 
@@ -29,7 +30,7 @@ for (let i=0; i<digitals.length; i++) {
   digitals[i].addEventListener('click', () => {
     if(out.textContent.length < 18){
       value += digitals[i].textContent;
-      out.innerHTML = value;
+      out.textContent = value;
     }
   })
 }
@@ -37,7 +38,7 @@ for (let i=0; i<digitals.length; i++) {
 const reset = () => {
   memory = +value;
   value = '';
-  out.innerHTML = '';
+  out.textContent = '';
 }
 
 backspace.addEventListener('click', () => {
@@ -48,7 +49,7 @@ dot.addEventListener('click', () => {
   console.log(dot.textContent)
   if(out.textContent.length < 18 && !~out.textContent.indexOf('.')) {
       value += dot.textContent;
-      out.innerHTML = value;
+      out.textContent = value;
   } 
 })
 
@@ -75,14 +76,14 @@ division.addEventListener('click', () => {
 root.addEventListener('click', () => {
   if(value !== '') {
     result = value = Math.pow(+value, 2);
-    out.innerHTML = chekResult(result);
+    out.textContent = chekResult(result);
   } 
 });
 
 square.addEventListener('click', () => {
   if(value !== '') {
     result = value = Math.sqrt(+value);
-    out.innerHTML = chekResult(result);
+    out.textContent = chekResult(result);
   } 
 });
 
@@ -90,7 +91,7 @@ clear.addEventListener('click', () => {
   memory = 0;
   value = '';
   result = 0;
-  out.innerHTML = '';
+  out.textContent = '';
 })
 
 equal.addEventListener('click', () => {
@@ -109,5 +110,5 @@ equal.addEventListener('click', () => {
       break;
   }
   value = '';
-  out.innerHTML = chekResult(result);
+  out.textContent = chekResult(result);
 })
