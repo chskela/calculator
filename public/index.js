@@ -1,4 +1,5 @@
-const digitals = document.querySelectorAll('.digital');
+'use strict'
+
 const out = document.querySelector('.out');
 const plus = document.querySelector('#plus');
 const minus = document.querySelector('#minus');
@@ -10,6 +11,7 @@ const square =document.querySelector('#square');
 const clear = document.querySelector('#clear');
 const dot = document.querySelector('#dot');
 const backspace = document.querySelector('#backspace');
+const keyboard = document.querySelector('#keyboard');
 
 let value = '';
 let memory = 0;
@@ -17,23 +19,28 @@ let flag = 0;
 let result = 0;
 
 const chekResult = result => {
-  result = '' + result;
+ result = '' + result;
   if (result.length > 17) {
-    result = result.split('e');
+    if (+result > -1 || +result < 1) {
+    result = result.split('e-');
+    return result[0].slice(0, 16 - result[1].length) + 'e-' + result[1];
+    } else {
+      result = result.split('e');
     return result[0].slice(0, 17 - result[1].length) + 'e' + result[1];
+    } 
   } else {
     return result;
   } 
 }
 
-for (let i=0; i<digitals.length; i++) {
-  digitals[i].addEventListener('click', () => {
-    if(out.textContent.length < 18){
-      value += digitals[i].textContent;
+keyboard.addEventListener('click', (event) => {
+  if (event.target.classList.contains("digital") === true) {
+      if(out.textContent.length < 18){
+      value += event.target.textContent;
       out.textContent = value;
     }
-  })
-}
+  } 
+})
 
 const reset = () => {
   memory = +value;
