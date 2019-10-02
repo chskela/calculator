@@ -18,20 +18,7 @@ let memory = 0;
 let flag = 0;
 let result = 0;
 
-const chekResult = result => {
- result = '' + result;
-  if (result.length > 17) {
-    if (+result > -1 || +result < 1) {
-    result = result.split('e-');
-    return result[0].slice(0, 16 - result[1].length) + 'e-' + result[1];
-    } else {
-      result = result.split('e');
-    return result[0].slice(0, 17 - result[1].length) + 'e' + result[1];
-    } 
-  } else {
-    return result;
-  } 
-}
+const chekResult = result => result.toPrecision(12);
 
 keyboard.addEventListener('click', (event) => {
   if (event.target.classList.contains("digital") === true) {
