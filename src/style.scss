@@ -1,0 +1,43 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.wrapper {
+  display: block;
+  width: 532px;
+  margin: 50px auto;
+  border: 1px solid gray;
+}
+.wrapper:after {
+  content: '';
+  display: table;
+  clear: both;
+}
+.key {
+  display: block;
+  width: 120px;
+  height: 120px;
+  font-size: 50px;
+  text-align: center;
+  line-height: 120px;
+  border: 1px solid gray;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 10px;
+  margin-bottom: 10px;
+  float: left;
+}
+
+.out {
+  border-radius: 5px;
+  padding-right: 5px;
+  display: block;
+
+  height: 60px;
+  margin: 10px;
+  border: 1px solid gray;
+  font-size: 50px;
+  text-align: right;
+}
