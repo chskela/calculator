@@ -14,7 +14,7 @@ module.exports = {
     extensions: ['.ts', '.tsx', '.js'],
   },
   devServer: {
-    contentBase: 'dist',
+    contentBase: path.resolve(__dirname, 'dist'),
     compress: true,
     port: 3000,
   },
@@ -29,7 +29,9 @@ module.exports = {
         use: [
           {
             loader: MiniCssExtractPlugin.loader,
-            options: {},
+            options: {
+              // hmr: devMode,
+            },
           },
           'css-loader',
           'postcss-loader',
@@ -58,7 +60,7 @@ module.exports = {
     //   ],
     // }),
     new HtmlWebpackPlugin({
-      template: 'src/index.html',
+      template: './src/index.html',
       filename: 'index.html',
       minify: {
         collapseWhitespace: true,
