@@ -13,7 +13,7 @@ const keyboard = <Element>document.querySelector('#keyboard');
 
 const initialState = {
   operandFirst: 0,
-  operandSecond: 0,
+  operation: true,
   result: 0,
   field: '0',
 };
@@ -27,6 +27,13 @@ updateOut(state);
 keyboard.addEventListener('click', (event) => {
   const button = <Element>event.target;
   if (button.classList.contains('digital')) {
+    if (state.operation) {
+      state = {
+        ...state,
+        operation: false,
+        field: '0',
+      };
+    }
     const symbol = button.textContent;
     if (symbol) {
       state = {
@@ -61,6 +68,36 @@ dot.addEventListener('click', () => {
   };
   updateOut(state);
 });
+
+plus.addEventListener('click', () => {
+  const operandFirst = state.operation ? state.operandFirst : Number(state.field);
+  const result = state.result + operandFirst;
+  const field = result.toString();
+
+  state = {
+    operandFirst,
+    operation: true,
+    result,
+    field,
+  };
+
+  updateOut(state);
+});
+
+// minus.addEventListener('click', () => {
+//   const operandFirst = state.operation ? state.operandFirst : Number(state.field);
+//   const result = state.result - operandFirst;
+//   const field = result.toString();
+
+//   state = {
+//     operandFirst,
+//     operation: true,
+//     result,
+//     field,
+//   };
+
+//   updateOut(state);
+// });
 
 function updateOut({ field }: TypeState): void {
   out.textContent = field;
