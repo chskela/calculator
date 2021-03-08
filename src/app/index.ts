@@ -11,26 +11,35 @@ const dot = <Element>document.querySelector('#dot');
 const backspace = <Element>document.querySelector('#backspace');
 const keyboard = <Element>document.querySelector('#keyboard');
 
-const initialState = {
+const initialState: TypeState = {
   operandFirst: 0,
-  operation: true,
+  operandSecond: 0,
+  error: false,
+  isDot: false,
   result: 0,
   field: '0',
 };
 
-let state = { ...initialState };
+let state: TypeState = { ...initialState };
 
-type TypeState = typeof state;
+type TypeState = {
+  operandFirst: number;
+  operandSecond: number;
+  error: boolean;
+  isDot: boolean;
+  result: number;
+  field: string;
+};
 
 updateOut(state);
 
 keyboard.addEventListener('click', (event) => {
   const button = <Element>event.target;
   if (button.classList.contains('digital')) {
-    if (state.operation) {
+    if (state.error) {
       state = {
         ...state,
-        operation: false,
+        error: false,
         field: '0',
       };
     }
@@ -62,43 +71,94 @@ clear.addEventListener('click', () => {
 });
 
 dot.addEventListener('click', () => {
-  state = {
-    ...state,
-    field: /\./.test(state.field) ? state.field : state.field + '.',
-  };
-  updateOut(state);
+  if (state.error) {
+    return;
+  } else {
+    state = {
+      ...state,
+      field: state.isDot ? state.field : state.field + '.',
+      isDot: true,
+    };
+    updateOut(state);
+  }
 });
 
 plus.addEventListener('click', () => {
-  const operandFirst = state.operation ? state.operandFirst : Number(state.field);
-  const result = state.result + operandFirst;
-  const field = result.toString();
-
-  state = {
-    operandFirst,
-    operation: true,
-    result,
-    field,
-  };
-
-  updateOut(state);
+  if (state.error) {
+    return;
+  } else {
+    state = {
+      ...state,
+      isDot: false,
+      field: setOpator(state.field, '+'),
+    };
+    updateOut(state);
+  }
 });
 
-// minus.addEventListener('click', () => {
-//   const operandFirst = state.operation ? state.operandFirst : Number(state.field);
-//   const result = state.result - operandFirst;
-//   const field = result.toString();
+minus.addEventListener('click', () => {
+  if (state.error) {
+    return;
+  } else {
+    state = {
+      ...state,
+      isDot: false,
+      field: setOpator(state.field, '-'),
+    };
+    updateOut(state);
+  }
+});
 
-//   state = {
-//     operandFirst,
-//     operation: true,
-//     result,
-//     field,
-//   };
+multiplication.addEventListener('click', () => {
+  if (state.error) {
+    return;
+  } else {
+    state = {
+      ...state,
+      isDot: false,
+      field: setOpator(state.field, '*'),
+    };
+    updateOut(state);
+  }
+});
 
-//   updateOut(state);
-// });
+division.addEventListener('click', () => {
+  if (state.error) {
+    return;
+  } else {
+    state = {
+      ...state,
+      isDot: false,
+      field: setOpator(state.field, '/'),
+    };
+    updateOut(state);
+  }
+});
+
+equal.addEventListener('click', () => {
+  if (/[\+\-\*\/]$/.test(state.field) || state.error) {
+    state = {
+      ...state,
+      isDot: false,
+      field: 'Error',
+      error: true,
+    };
+    updateOut(state);
+  } else {
+    const field: string = eval(state.field);
+    state = {
+      ...state,
+      isDot: false,
+      field,
+    };
+    updateOut(state);
+  }
+});
 
 function updateOut({ field }: TypeState): void {
   out.textContent = field;
+}
+
+function setOpator(field: string, opator: string) {
+  return /[\+\-\*\/\.]$/.test(field) ? field : field + opator;
 }
